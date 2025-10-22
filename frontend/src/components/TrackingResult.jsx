@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useLanguage } from '../LanguageContext'
 
 function TrackingResult({ data, onReset }) {
+  const { t, language } = useLanguage()
   const [showHistory, setShowHistory] = useState(false)
 
   const formatDate = (dateString) => {
@@ -8,7 +10,8 @@ function TrackingResult({ data, onReset }) {
     
     try {
       const date = new Date(dateString)
-      return date.toLocaleDateString('en-US', {
+      const locale = language === 'he' ? 'he-IL' : 'en-US'
+      return date.toLocaleDateString(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',
@@ -42,11 +45,11 @@ function TrackingResult({ data, onReset }) {
   const currentStage = getDeliveryStage()
 
   const deliveryStages = [
-    { id: 1, name: 'Order Received', icon: '📋' },
-    { id: 2, name: 'In Transit', icon: '✈️' },
-    { id: 3, name: 'Customs', icon: '🛃' },
-    { id: 4, name: 'Out for Delivery', icon: '🚚' },
-    { id: 5, name: 'Delivered', icon: '📦' },
+    { id: 1, name: t.stages.received, icon: '📋' },
+    { id: 2, name: t.stages.inTransit, icon: '✈️' },
+    { id: 3, name: t.stages.customs, icon: '🛃' },
+    { id: 4, name: t.stages.outForDelivery, icon: '🚚' },
+    { id: 5, name: t.stages.delivered, icon: '📦' },
   ]
 
   const getStatusIcon = () => {
@@ -178,7 +181,7 @@ function TrackingResult({ data, onReset }) {
                     {stage.name}
                   </p>
                   {stage.id === currentStage && (
-                    <p className="text-xs text-gray-500 mt-1">Current Status</p>
+                    <p className="text-xs text-gray-500 mt-1">{t.stages.currentStatus}</p>
                   )}
                 </div>
               </div>
@@ -189,19 +192,19 @@ function TrackingResult({ data, onReset }) {
         {/* Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left bg-gray-50 rounded-lg p-4 mb-6">
           <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Order ID</p>
+            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">{t.results.orderId}</p>
             <p className="text-gray-800 font-medium">{data.orderId}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Tracking Number</p>
+            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">{t.results.trackingNumber}</p>
             <p className="text-gray-800 font-medium">{data.trackingNumber}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Courier</p>
+            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">{t.results.courier}</p>
             <p className="text-gray-800 font-medium">{data.courier}</p>
           </div>
           <div>
-            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">Last Updated</p>
+            <p className="text-xs text-gray-500 uppercase font-semibold mb-1">{t.results.lastUpdated}</p>
             <p className="text-gray-800 font-medium">{formatDate(data.lastUpdated)}</p>
           </div>
         </div>
@@ -212,13 +215,13 @@ function TrackingResult({ data, onReset }) {
             onClick={() => setShowHistory(!showHistory)}
             className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg transition-colors"
           >
-            {showHistory ? 'Hide' : 'Show'} Tracking History
+            {showHistory ? t.results.hideHistory : t.results.showHistory}
           </button>
           <button
             onClick={onReset}
             className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
           >
-            Track Another Order
+            {t.results.trackAnother}
           </button>
         </div>
       </div>
@@ -227,10 +230,10 @@ function TrackingResult({ data, onReset }) {
       {showHistory && data.history && data.history.length > 0 && (
         <div className="card">
           <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
-            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 ltr:mr-2 rtl:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            Tracking History
+            {t.results.historyTitle}
           </h3>
           
           <div className="space-y-4">
