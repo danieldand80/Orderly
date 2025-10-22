@@ -93,7 +93,7 @@ function App() {
                       <li>Courier hasn't updated their system yet</li>
                     </ul>
                     <p className="text-xs text-blue-600 mt-2 italic">
-                      ⏰ Please check back in 24-48 hours
+                      ⏰ Please check back in 3-4 days
                     </p>
                   </div>
                   <button 
