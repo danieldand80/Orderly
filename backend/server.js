@@ -210,9 +210,9 @@ app.get("/api/track/:orderId", async (req, res) => {
       });
     }
 
-    // Step 4: Select best courier data
-    console.log(`Step 4: Selecting best from ${parsedData.length} courier(s)...`);
-    const bestCourier = selectBestCourierData(parsedData);
+    // Step 4: Select best courier data with smart priority
+    console.log(`Step 4: Selecting best from ${parsedData.length} courier(s) for tracking number: ${trackingNumber}...`);
+    const bestCourier = selectBestCourierData(parsedData, trackingNumber);
 
     if (!bestCourier) {
       console.log("⚠️ No valid tracking information found");

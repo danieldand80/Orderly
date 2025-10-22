@@ -1,13 +1,46 @@
 /**
- * Selects the best courier data based on latest timestamp and delivery stage
- * Priority: Latest timestamp > Most advanced delivery stage
+ * Selects the best courier data based on smart priority selection
+ * Priority 1: If tracking number starts with "JYDIL" -> prefer JYTD courier
+ * Priority 2: Prefer Yuansheng Ancheng courier (most reliable for most cases)
+ * Priority 3: Latest timestamp > Most advanced delivery stage (fallback)
  * @param {Array} allCouriers - Array of courier tracking data
+ * @param {String} trackingNumber - The tracking number being queried
  * @returns {Object|null} - Best courier data or null
  */
-export function selectBestCourierData(allCouriers) {
+export function selectBestCourierData(allCouriers, trackingNumber = null) {
   if (!allCouriers || allCouriers.length === 0) {
     return null;
   }
+
+  // PRIORITY 1: If tracking number starts with "JYDIL" -> prefer JYTD
+  if (trackingNumber && trackingNumber.toUpperCase().startsWith("JYDIL")) {
+    const jytd = allCouriers.find(courier => 
+      courier.courier.includes("JYTD") || 
+      courier.courier.includes("捷易通达") ||
+      courier.courier.toLowerCase().includes("jietong")
+    );
+    
+    if (jytd) {
+      console.log(`✅ PRIORITY 1: Selected JYTD courier for JYDIL tracking number`);
+      return jytd;
+    }
+  }
+
+  // PRIORITY 2: Prefer Yuansheng Ancheng (most reliable for standard shipments)
+  const yuansheng = allCouriers.find(courier => 
+    courier.courier.includes("Yuansheng") || 
+    courier.courier.includes("Ancheng") ||
+    courier.courier.includes("元盛")
+  );
+  
+  if (yuansheng) {
+    console.log(`✅ PRIORITY 2: Selected Yuansheng Ancheng courier (default priority)`);
+    return yuansheng;
+  }
+
+  // PRIORITY 3: Fallback to timestamp + stage based selection
+  console.log(`ℹ️  PRIORITY 3: No priority courier found, using fallback selection (latest + stage)`);
+
 
   // Define delivery stage priority (higher = more advanced)
   const stagePriority = {
