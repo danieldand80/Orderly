@@ -115,6 +115,7 @@ export const translations = {
       "package scanned": "Package scanned",
       "received": "Received",
       "info received": "Information received",
+      "sent to guangzhou sorting facility": "Sent to Guangzhou sorting facility",
       
       // Customs statuses
       "parcel data received at israel customs": "Parcel data received at Israel customs",
@@ -140,14 +141,7 @@ export const translations = {
       "航班起飞": "Flight departed",
       "航班降落": "Flight landed",
       "到达目的地机场": "Arrived at destination airport",
-      "离开始发地机场": "Departed from origin airport",
-      
-      // Mixed language statuses (Hebrew + English from courier) - Clean English
-      "מידע נקלט / shipment data received": "Shipment data received",
-      "מידע נקלט (משלוח עדיין לא הגיע) / shipment data received": "Shipment data received",
-      "נתוני המשלוח שודרו למכס (טרם הגיע לארץ) / parcel data received at israel customs": "Parcel data received at Israel customs",
-      "מע\"מ שולם / vat paid": "VAT paid",
-      "משלוח עדיין לא הגיע / shipment not yet arrived": "Shipment not yet arrived"
+      "离开始发地机场": "Departed from origin airport"
     }
   },
   
@@ -267,6 +261,7 @@ export const translations = {
       "package scanned": "החבילה נסרקה",
       "received": "התקבל",
       "info received": "מידע התקבל",
+      "sent to guangzhou sorting facility": "נשלח למרכז מיון בגואנגג'ואו",
       
       // Customs statuses
       "parcel data received at israel customs": "נתוני החבילה התקבלו במכס ישראל",
@@ -333,14 +328,7 @@ export const translations = {
       "航班起飞": "הטיסה המריאה",
       "航班降落": "הטיסה נחתה",
       "到达目的地机场": "הגיע לשדה תעופה ביעד",
-      "离开始发地机场": "עזב את שדה תעופה מקור",
-      
-      // Mixed language statuses (Hebrew + English from courier) - Clean Hebrew
-      "מידע נקלט / shipment data received": "מידע נקלט",
-      "מידע נקלט (משלוח עדיין לא הגיע) / shipment data received": "מידע נקלט (משלוח עדיין לא הגיע)",
-      "נתוני המשלוח שודרו למכס (טרם הגיע לארץ) / parcel data received at israel customs": "נתוני המשלוח שודרו למכס (טרם הגיע לארץ)",
-      "מע\"מ שולם / vat paid": "מע\"מ שולם",
-      "משלוח עדיין לא הגיע / shipment not yet arrived": "משלוח עדיין לא הגיע"
+      "离开始发地机场": "עזב את שדה תעופה מקור"
     }
   }
 };

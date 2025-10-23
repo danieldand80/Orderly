@@ -36,60 +36,29 @@ export const LanguageProvider = ({ children }) => {
   const translateStatus = (status) => {
     if (!status) return status;
     
-    const statusLower = status.toLowerCase().trim();
     const trackingStatuses = translations[language]?.trackingStatuses || {};
     
-    // 1. Try exact match first
-    if (trackingStatuses[statusLower]) {
-      return trackingStatuses[statusLower];
-    }
-    
-    // 2. Try exact match with original status
-    if (trackingStatuses[status]) {
-      return trackingStatuses[status];
-    }
-    
-    // 3. For Hebrew language, check if status contains mixed language (Hebrew + English)
-    // Extract only the clean part based on selected language
+    // STEP 1: Handle mixed language statuses (Hebrew / English)
+    // Format: "עברית / English" or "עברית (הערה) / English"
     if (status.includes(' / ')) {
       const parts = status.split(' / ');
       
       if (language === 'he') {
-        // Return Hebrew part (usually first)
-        const hebrewPart = parts.find(p => /[\u0590-\u05FF]/.test(p));
-        if (hebrewPart) return hebrewPart.trim();
+        // For Hebrew: take first part (before " / ")
+        return parts[0].trim();
       } else {
-        // Return English part (usually second)
-        const englishPart = parts.find(p => !/[\u0590-\u05FF]/.test(p));
-        if (englishPart) return englishPart.trim();
+        // For English: take second part (after " / ")
+        return parts[1].trim();
       }
     }
     
-    // 4. Try partial match - find if status contains any key from translations
-    for (const [key, value] of Object.entries(trackingStatuses)) {
-      // Check if the status contains the translation key
-      if (statusLower.includes(key)) {
-        return value;
-      }
-      
-      // Check if the key contains the status (reverse match)
-      if (key.includes(statusLower)) {
-        return value;
-      }
+    // STEP 2: Try exact match (case-insensitive)
+    const statusLower = status.toLowerCase().trim();
+    if (trackingStatuses[statusLower]) {
+      return trackingStatuses[statusLower];
     }
     
-    // 5. Try word-by-word matching for compound statuses
-    const words = statusLower.split(' ');
-    for (const [key, value] of Object.entries(trackingStatuses)) {
-      const keyWords = key.split(' ');
-      // If most words match, use this translation
-      const matchCount = keyWords.filter(kw => words.includes(kw)).length;
-      if (matchCount >= Math.min(2, keyWords.length)) {
-        return value;
-      }
-    }
-    
-    // 6. If nothing found, return original status
+    // STEP 3: If nothing found, return original
     return status;
   };
 
