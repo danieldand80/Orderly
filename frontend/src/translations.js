@@ -89,12 +89,25 @@ export const translations = {
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
-      // Chinese statuses (from Chinese carriers)
-      "货物离开操作中心": "The package left the operation center",
-      "货物到达操作中心": "The package arrived at the operation center",
+      // Chinese statuses (from Chinese carriers) - English translation
+      "货物离开操作中心": "Package left the operation center",
+      "货物到达操作中心": "Package arrived at the operation center",
       "到达收货点": "Arrived at pickup point",
       "货物电子信息已经收到": "Package electronic information received",
-      "货物离开操作作中心": "The package left the operation center"
+      "货物离开操作作中心": "Package left the operation center",
+      "货物已到达": "Package has arrived",
+      "包裹详情已收到": "Package details received",
+      "已收货": "Received",
+      "已签收": "Signed for delivery",
+      "运输中": "In transit",
+      "派送中": "Out for delivery",
+      "已发货": "Shipped",
+      "清关中": "In customs clearance",
+      "清关完成": "Customs clearance completed",
+      "航班起飞": "Flight departed",
+      "航班降落": "Flight landed",
+      "到达目的地机场": "Arrived at destination airport",
+      "离开始发地机场": "Departed from origin airport"
     }
   },
   
@@ -239,7 +252,20 @@ export const translations = {
       "货物到达操作中心": "החבילה הגיעה למרכז התפעול",
       "到达收货点": "הגיע לנקודת איסוף",
       "货物电子信息已经收到": "המידע האלקטרוני של החבילה התקבל",
-      "货物离开操作作中心": "החבילה עזבה את מרכז התפעול"
+      "货物离开操作作中心": "החבילה עזבה את מרכז התפעול",
+      "货物已到达": "החבילה הגיעה",
+      "包裹详情已收到": "פרטי החבילה התקבלו",
+      "已收货": "התקבל",
+      "已签收": "נחתם על המסירה",
+      "运输中": "במעבר",
+      "派送中": "יצא למשלוח",
+      "已发货": "נשלח",
+      "清关中": "בתהליך שחרור מכס",
+      "清关完成": "שחרור מכס הושלם",
+      "航班起飞": "הטיסה המריאה",
+      "航班降落": "הטיסה נחתה",
+      "到达目的地机场": "הגיע לשדה תעופה ביעד",
+      "离开始发地机场": "עזב את שדה תעופה מקור"
     }
   }
 };
