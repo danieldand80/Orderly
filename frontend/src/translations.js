@@ -107,7 +107,13 @@ export const translations = {
       "航班起飞": "Flight departed",
       "航班降落": "Flight landed",
       "到达目的地机场": "Arrived at destination airport",
-      "离开始发地机场": "Departed from origin airport"
+      "离开始发地机场": "Departed from origin airport",
+      
+      // Mixed language statuses (Hebrew + English from courier) - Clean English
+      "מידע נקלט / shipment data received": "Shipment data received",
+      "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "Parcel data received at Israel customs",
+      "מע\"מ שולם / vat paid": "VAT paid",
+      "משלוח עדיין לא הגיע / shipment not yet arrived": "Shipment not yet arrived"
     }
   },
   
@@ -265,7 +271,13 @@ export const translations = {
       "航班起飞": "הטיסה המריאה",
       "航班降落": "הטיסה נחתה",
       "到达目的地机场": "הגיע לשדה תעופה ביעד",
-      "离开始发地机场": "עזב את שדה תעופה מקור"
+      "离开始发地机场": "עזב את שדה תעופה מקור",
+      
+      // Mixed language statuses (Hebrew + English from courier) - Clean Hebrew
+      "מידע נקלט / shipment data received": "מידע נקלט",
+      "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "נתוני המשלוח שודרו למכס",
+      "מע\"מ שולם / vat paid": "מע\"מ שולם",
+      "משלוח עדיין לא הגיע / shipment not yet arrived": "משלוח עדיין לא הגיע"
     }
   }
 };
