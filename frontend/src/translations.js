@@ -35,7 +35,11 @@ export const translations = {
       reason2: "Shipping label printed but not picked up",
       reason3: "Courier hasn't updated their system yet",
       checkBack: "Please check back in 3-4 days",
-      tryAnother: "Try another order"
+      tryAnother: "Try another order",
+      // Specific error messages
+      orderNotFound: "We couldn't find your order ID in our system.\n\nThis usually happens for one of two reasons:\n• The order number was entered incorrectly.\n• Your tracking number is not yet available - it may take up to 7 days to appear in the system.\n\nYour order ID starts with FLY. For example: FLY25082571179141\n\nPlease double-check your order number or try again later.",
+      trackingNotGenerated: "Your order was found in our system. However, the tracking number has not yet been generated. This is completely normal - it usually takes around 10–14 days for the tracking number to appear after the package is first registered with the courier.\n\nPlease check back in a few days to see your updated tracking information.",
+      generalError: "An error occurred while processing your request. Please try again later."
     },
     
     // Results
@@ -119,7 +123,11 @@ export const translations = {
       reason2: "תווית משלוח הודפסה אך לא נאספה",
       reason3: "השליח עדיין לא עדכן את המערכת שלו",
       checkBack: "אנא בדוק שוב בעוד 3-4 ימים",
-      tryAnother: "נסה הזמנה אחרת"
+      tryAnother: "נסה הזמנה אחרת",
+      // Specific error messages
+      orderNotFound: "לא הצלחנו למצוא את מספר ההזמנה שלך במערכת שלנו.\n\nזה בדרך כלל קורה מאחת משתי סיבות:\n• מספר ההזמנה הוזן באופן שגוי\n• מספר המעקב שלך עדיין לא זמין - זה עלול לקחת עד 7 ימים להופיע במערכת\n\nמספר ההזמנה שלך מתחיל ב-FLY. לדוגמה: FLY25082571179141\n\nאנא בדוק שוב את מספר ההזמנה שלך או נסה שוב מאוחר יותר.",
+      trackingNotGenerated: "ההזמנה שלך נמצאה במערכת שלנו. אולם, מספר המעקב עדיין לא נוצר. זה לגמרי נורמלי - בדרך כלל לוקח כ-10-14 ימים עד שמספר המעקב יופיע לאחר שהחבילה נרשמה לראשונה אצל השליח.\n\nאנא בדוק שוב בעוד מספר ימים כדי לראות את מידע המעקב המעודכן שלך.",
+      generalError: "אירעה שגיאה בעיבוד הבקשה שלך. אנא נסה שוב מאוחר יותר."
     },
     
     // Results
