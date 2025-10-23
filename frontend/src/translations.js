@@ -16,7 +16,7 @@ export const translations = {
     form: {
       label: "Order Number",
       placeholder: "Enter your order number",
-      hint: "You can find your order number in your confirmation email",
+      hint: "You can find your order number in your confirmation email. Its the number that starts with \"FLY\"",
       button: "Track Shipment",
       buttonLoading: "Tracking..."
     },
@@ -163,7 +163,7 @@ export const translations = {
     form: {
       label: "מספר הזמנה",
       placeholder: "הזן את מספר ההזמנה שלך",
-      hint: "תוכל למצוא את מספר ההזמנה שלך באימייל האישור",
+      hint: "תוכל למצוא את מספר ההזמנה שלך באימייל האישור. זה המספר שמתחיל ב-\"FLY\"",
       button: "עקוב אחר משלוח",
       buttonLoading: "מעקב..."
     },
