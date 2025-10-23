@@ -89,7 +89,12 @@ export const translations = {
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
-      // Keep original English - no translation needed
+      // Chinese statuses (from Chinese carriers)
+      "货物离开操作中心": "The package left the operation center",
+      "货物到达操作中心": "The package arrived at the operation center",
+      "到达收货点": "Arrived at pickup point",
+      "货物电子信息已经收到": "Package electronic information received",
+      "货物离开操作作中心": "The package left the operation center"
     }
   },
   
@@ -227,7 +232,14 @@ export const translations = {
       "cargo manifest received": "התקבל מניפסט מטען",
       "parcel manifest received": "התקבל מניפסט חבילה",
       "parcel manifest update received": "התקבל עדכון מניפסט חבילה",
-      "package detail received": "פרטי החבילה התקבלו"
+      "package detail received": "פרטי החבילה התקבלו",
+      
+      // Chinese statuses (from Chinese carriers) - Hebrew translation
+      "货物离开操作中心": "החבילה עזבה את מרכז התפעול",
+      "货物到达操作中心": "החבילה הגיעה למרכז התפעול",
+      "到达收货点": "הגיע לנקודת איסוף",
+      "货物电子信息已经收到": "המידע האלקטרוני של החבילה התקבל",
+      "货物离开操作作中心": "החבילה עזבה את מרכז התפעול"
     }
   }
 };
