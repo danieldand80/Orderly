@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useLanguage } from '../LanguageContext'
 
 function TrackingResult({ data, onReset }) {
-  const { t, language } = useLanguage()
+  const { t, language, translateStatus } = useLanguage()
   const [showHistory, setShowHistory] = useState(false)
 
   const formatDate = (dateString) => {
@@ -86,11 +86,11 @@ function TrackingResult({ data, onReset }) {
     <div className="space-y-6">
       {/* Main Status Card */}
       <div className="card text-center">
-        {getStatusIcon()}
-        
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">
-          {data.latestStatus}
-        </h2>
+      {getStatusIcon()}
+
+      <h2 className="text-2xl font-bold text-gray-800 mb-2">
+        {translateStatus(data.latestStatus)}
+      </h2>
         
         <p className="text-gray-600 mb-6">
           {data.location && (
@@ -248,7 +248,7 @@ function TrackingResult({ data, onReset }) {
                 
                 <div className="flex-grow pb-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-1">
-                    <p className="font-medium text-gray-800">{event.status}</p>
+                    <p className="font-medium text-gray-800">{translateStatus(event.status)}</p>
                     <p className="text-sm text-gray-500">{formatDate(event.date)}</p>
                   </div>
                   {event.location && (

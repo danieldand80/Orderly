@@ -85,6 +85,51 @@ export const translations = {
     footer: {
       copyright: "© 2025 Flylink. All rights reserved.",
       poweredBy: "Powered by 17Track API & Google Sheets"
+    },
+    
+    // Tracking Status Translations (from courier API)
+    trackingStatuses: {
+      // Delivery statuses
+      "delivered": "Delivered",
+      "final delivery": "Final delivery",
+      "out for delivery": "Out for delivery",
+      
+      // Pickup statuses
+      "item received at delivery unit": "Item received at delivery unit",
+      "package scanned at pick up point/waiting for pick up": "Package scanned at pick up point/waiting for pick up",
+      "package waiting for pickup by buyer": "Package waiting for pickup by buyer",
+      "available for pickup": "Available for pickup",
+      
+      // Transit statuses
+      "package in regional center": "Package in regional center",
+      "package in sorting center": "Package in sorting center",
+      "sorted to delivery point (after customs)": "Sorted to delivery point (after Customs)",
+      
+      // Customs statuses
+      "parcel cleared": "Parcel cleared",
+      "package released from customs": "Package released from customs",
+      "clearance process started": "Clearance Process Started",
+      
+      // Airport/Flight statuses
+      "package flight details received": "Package flight details received",
+      "landed in israel": "Landed in Israel",
+      "arrive at destination airport": "Arrive at destination airport",
+      "arrived post terminal": "Arrived Post terminal",
+      "arrival at inward office of exchange": "Arrival at inward office of exchange",
+      "the flight has departed": "The flight has departed",
+      "arrive at departure airport": "Arrive at departure airport",
+      
+      // Origin statuses
+      "export clearance success": "Export clearance success",
+      "the package leaves the operation center": "The package leaves the operation center",
+      "the package has arrived at the operation center": "The package has arrived at the operation center",
+      "the package has been sent out": "The package has been sent out",
+      "the electronic information of the package has been received": "The electronic information of the package has been received",
+      
+      // Manifest/System statuses
+      "cargo manifest received": "Cargo manifest received",
+      "parcel manifest received": "Parcel manifest received",
+      "parcel manifest update received": "Parcel manifest update received"
     }
   },
   
@@ -174,6 +219,51 @@ export const translations = {
     footer: {
       copyright: "© 2025 Flylink. כל הזכויות שמורות.",
       poweredBy: "מופעל על ידי 17Track API ו-Google Sheets"
+    },
+    
+    // Tracking Status Translations (from courier API)
+    trackingStatuses: {
+      // Delivery statuses
+      "delivered": "נמסר",
+      "final delivery": "מסירה סופית",
+      "out for delivery": "יצא למשלוח",
+      
+      // Pickup statuses
+      "item received at delivery unit": "החבילה התקבלה ביחידת המשלוחים",
+      "package scanned at pick up point/waiting for pick up": "החבילה נסרקה בנקודת איסוף / ממתינה לאיסוף",
+      "package waiting for pickup by buyer": "החבילה ממתינה לאיסוף על ידי הקונה",
+      "available for pickup": "זמין לאיסוף",
+      
+      // Transit statuses
+      "package in regional center": "החבילה במרכז אזורי",
+      "package in sorting center": "החבילה במרכז מיון",
+      "sorted to delivery point (after customs)": "מוינה לנקודת משלוח (לאחר מכס)",
+      
+      // Customs statuses
+      "parcel cleared": "החבילה עברה מכס",
+      "package released from customs": "החבילה שוחררה מהמכס",
+      "clearance process started": "תהליך שחרור מהמכס החל",
+      
+      // Airport/Flight statuses
+      "package flight details received": "התקבלו פרטי הטיסה של החבילה",
+      "landed in israel": "נחתה בישראל",
+      "arrive at destination airport": "הגיע לשדה תעופה ביעד",
+      "arrived post terminal": "הגיע למסוף דואר",
+      "arrival at inward office of exchange": "הגיע למשרד חילופי דואר נכנס",
+      "the flight has departed": "הטיסה המריאה",
+      "arrive at departure airport": "הגיע לשדה תעופה היציאה",
+      
+      // Origin statuses
+      "export clearance success": "אישור יצוא הצליח",
+      "the package leaves the operation center": "החבילה עזבה את מרכז התפעול",
+      "the package has arrived at the operation center": "החבילה הגיעה למרכז התפעול",
+      "the package has been sent out": "החבילה נשלחה",
+      "the electronic information of the package has been received": "המידע האלקטרוני של החבילה התקבל",
+      
+      // Manifest/System statuses
+      "cargo manifest received": "התקבל מניפסט מטען",
+      "parcel manifest received": "התקבל מניפסט חבילה",
+      "parcel manifest update received": "התקבל עדכון מניפסט חבילה"
     }
   }
 };

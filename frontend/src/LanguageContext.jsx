@@ -32,8 +32,19 @@ export const LanguageProvider = ({ children }) => {
 
   const t = translations[language];
 
+  // Function to translate tracking statuses from API
+  const translateStatus = (status) => {
+    if (!status) return status;
+    
+    const statusKey = status.toLowerCase();
+    const translated = translations[language]?.trackingStatuses?.[statusKey];
+    
+    // Return translated status if found, otherwise return original
+    return translated || status;
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, toggleLanguage, t, translateStatus }}>
       {children}
     </LanguageContext.Provider>
   );
