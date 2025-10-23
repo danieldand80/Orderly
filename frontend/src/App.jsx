@@ -22,12 +22,16 @@ function App() {
 
       if (response.ok && data.status === 'success') {
         setTrackingData(data)
-      } else if (data.status === 'not_found') {
-        // Translate error messages based on the message content
+      } else if (data.status === 'not_found' || data.status === 'tracking_system_error') {
+        // Translate error messages based on the status and message content
         let translatedError = data.message
         
+        // Check for specific error types
+        if (data.status === 'tracking_system_error') {
+          translatedError = t.error.trackingSystemError
+        }
         // Check if message contains "couldn't find your order ID"
-        if (data.message && data.message.includes("couldn't find your order ID")) {
+        else if (data.message && data.message.includes("couldn't find your order ID")) {
           translatedError = t.error.orderNotFound
         }
         // Check if message contains "tracking number has not yet been generated"

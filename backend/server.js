@@ -185,8 +185,8 @@ app.get("/api/track/:orderId", async (req, res) => {
     if (!rawTrackingData || rawTrackingData.length === 0) {
       console.log("⚠️ No tracking data available yet");
       return res.json({
-        status: "not_found",
-        message: "Your order was found in our system.\nHowever, the tracking number has not yet been generated.\nThis is completely normal - it usually takes around 10–14 days for the tracking number to appear after the package is first registered with the courier.\n\nPlease check back in a few days to see your updated tracking information.",
+        status: "tracking_system_error",
+        message: "We found your tracking number, but there was a problem retrieving the shipment details from our tracking system.\n\nThis is usually a temporary issue.\n\nPlease try again later - your order information is safe and will appear once the system updates successfully.",
         orderId: orderId,
         trackingNumber: trackingNumber,
       });
@@ -203,8 +203,8 @@ app.get("/api/track/:orderId", async (req, res) => {
     if (!parsedData || parsedData.length === 0) {
       console.log("⚠️ Unable to parse tracking data");
       return res.json({
-        status: "not_found",
-        message: "Your order was found in our system.\nHowever, the tracking number has not yet been generated.\nThis is completely normal - it usually takes around 10–14 days for the tracking number to appear after the package is first registered with the courier.\n\nPlease check back in a few days to see your updated tracking information.",
+        status: "tracking_system_error",
+        message: "We found your tracking number, but there was a problem retrieving the shipment details from our tracking system.\n\nThis is usually a temporary issue.\n\nPlease try again later - your order information is safe and will appear once the system updates successfully.",
         orderId: orderId,
         trackingNumber: trackingNumber,
       });
@@ -217,8 +217,8 @@ app.get("/api/track/:orderId", async (req, res) => {
     if (!bestCourier) {
       console.log("⚠️ No valid tracking information found");
       return res.json({
-        status: "not_found",
-        message: "Your order was found in our system.\nHowever, the tracking number has not yet been generated.\nThis is completely normal - it usually takes around 10–14 days for the tracking number to appear after the package is first registered with the courier.\n\nPlease check back in a few days to see your updated tracking information.",
+        status: "tracking_system_error",
+        message: "We found your tracking number, but there was a problem retrieving the shipment details from our tracking system.\n\nThis is usually a temporary issue.\n\nPlease try again later - your order information is safe and will appear once the system updates successfully.",
         orderId: orderId,
         trackingNumber: trackingNumber,
       });
