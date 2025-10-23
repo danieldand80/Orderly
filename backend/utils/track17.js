@@ -76,12 +76,23 @@ export async function fetchTrackingDataFrom17Track(trackingNumber) {
       }
     }
 
-    // If still not found, try registration
+    // If still not found, try registration with smart carrier selection
     console.log(`Registering tracking number: ${trackingNumber}`);
     const registerUrl = "https://api.17track.net/track/v2/register";
     
+    // Smart carrier selection based on tracking number pattern
+    let carrierCode = null;
+    if (trackingNumber.toUpperCase().startsWith("JYDIL")) {
+      carrierCode = 191169; // JYTD courier
+      console.log(`📌 Selected JYTD carrier (191169) for JYDIL tracking number`);
+    } else {
+      carrierCode = 191697; // Yuansheng Ancheng courier (default for most shipments)
+      console.log(`📌 Selected Yuansheng Ancheng carrier (191697) as default`);
+    }
+    
     const registerBody = [{ 
       number: trackingNumber,
+      carrier: carrierCode,
       auto_query: 1  // Request immediate data fetch
     }];
     console.log("Register request body:", JSON.stringify(registerBody));

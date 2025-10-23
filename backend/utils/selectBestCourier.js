@@ -15,26 +15,28 @@ export function selectBestCourierData(allCouriers, trackingNumber = null) {
   // PRIORITY 1: If tracking number starts with "JYDIL" -> prefer JYTD
   if (trackingNumber && trackingNumber.toUpperCase().startsWith("JYDIL")) {
     const jytd = allCouriers.find(courier => 
+      courier.courierCode === 191169 || // Official JYTD carrier code
       courier.courier.includes("JYTD") || 
       courier.courier.includes("捷易通达") ||
       courier.courier.toLowerCase().includes("jietong")
     );
     
     if (jytd) {
-      console.log(`✅ PRIORITY 1: Selected JYTD courier for JYDIL tracking number`);
+      console.log(`✅ PRIORITY 1: Selected JYTD courier (${jytd.courierCode}) for JYDIL tracking number`);
       return jytd;
     }
   }
 
   // PRIORITY 2: Prefer Yuansheng Ancheng (most reliable for standard shipments)
   const yuansheng = allCouriers.find(courier => 
+    courier.courierCode === 191697 || // Official Yuansheng Ancheng carrier code (confirmed by 17Track support)
     courier.courier.includes("Yuansheng") || 
     courier.courier.includes("Ancheng") ||
     courier.courier.includes("元盛")
   );
   
   if (yuansheng) {
-    console.log(`✅ PRIORITY 2: Selected Yuansheng Ancheng courier (default priority)`);
+    console.log(`✅ PRIORITY 2: Selected Yuansheng Ancheng courier (${yuansheng.courierCode}) - default priority`);
     return yuansheng;
   }
 
