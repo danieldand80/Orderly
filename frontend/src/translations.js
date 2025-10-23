@@ -111,6 +111,7 @@ export const translations = {
       
       // Mixed language statuses (Hebrew + English from courier) - Clean English
       "מידע נקלט / shipment data received": "Shipment data received",
+      "מידע נקלט (משלוח עדיין לא הגיע) / shipment data received": "Shipment data received",
       "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "Parcel data received at Israel customs",
       "מע\"מ שולם / vat paid": "VAT paid",
       "משלוח עדיין לא הגיע / shipment not yet arrived": "Shipment not yet arrived"
@@ -275,7 +276,8 @@ export const translations = {
       
       // Mixed language statuses (Hebrew + English from courier) - Clean Hebrew
       "מידע נקלט / shipment data received": "מידע נקלט",
-      "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "נתוני המשלוח שודרו למכס",
+      "מידע נקלט (משלוח עדיין לא הגיע) / shipment data received": "מידע נקלט (משלוח עדיין לא הגיע)",
+      "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "נתוני המשלוח שודרו למכס (סרב הגיע לארץ)",
       "מע\"מ שולם / vat paid": "מע\"מ שולם",
       "משלוח עדיין לא הגיע / shipment not yet arrived": "משלוח עדיין לא הגיע"
     }
