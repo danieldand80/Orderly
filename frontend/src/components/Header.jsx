@@ -14,8 +14,7 @@ function Header() {
               className="h-10 w-auto object-contain"
             />
             <div>
-              <h1 className="text-xl font-bold text-gray-800">{t.header.title}</h1>
-              <p className="text-xs text-gray-500">{t.header.subtitle}</p>
+              <p className="text-sm text-gray-600">{t.header.subtitle}</p>
             </div>
           </div>
 
