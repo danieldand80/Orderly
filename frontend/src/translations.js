@@ -107,6 +107,7 @@ export const translations = {
       "delayed": "Delayed",
       "waiting for flight": "Waiting for flight",
       "estimated time for flight": "Estimated time for flight",
+      "estimated time for flight on": "Estimated time for flight on",
       "flight departed": "Flight departed",
       "flight landed": "Flight landed",
       
@@ -253,6 +254,7 @@ export const translations = {
       "delayed": "מתעכב",
       "waiting for flight": "ממתין לטיסה",
       "estimated time for flight": "זמן משוער לטיסה",
+      "estimated time for flight on": "זמן משוער לטיסה ב",
       "flight departed": "הטיסה המריאה",
       "flight landed": "הטיסה נחתה",
       

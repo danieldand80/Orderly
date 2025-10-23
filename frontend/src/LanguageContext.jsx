@@ -58,7 +58,17 @@ export const LanguageProvider = ({ children }) => {
       return trackingStatuses[statusLower];
     }
     
-    // STEP 3: If nothing found, return original
+    // STEP 3: Try partial match for statuses with dynamic content (dates, numbers, etc.)
+    // Example: "Estimated Time For Flight On 11ST OCT" contains "estimated time for flight on"
+    for (const [key, translation] of Object.entries(trackingStatuses)) {
+      if (statusLower.startsWith(key.toLowerCase())) {
+        // Found a match - keep the dynamic part (date, number) at the end
+        const dynamicPart = status.slice(key.length).trim();
+        return dynamicPart ? `${translation} ${dynamicPart}` : translation;
+      }
+    }
+    
+    // STEP 4: If nothing found, return original
     return status;
   };
 
