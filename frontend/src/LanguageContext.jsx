@@ -36,7 +36,11 @@ export const LanguageProvider = ({ children }) => {
   const translateStatus = (status) => {
     if (!status) return status;
     
-    const statusKey = status.toLowerCase();
+    // For English, always return original
+    if (language === 'en') return status;
+    
+    // For Hebrew, try to find translation
+    const statusKey = status.toLowerCase().trim();
     const translated = translations[language]?.trackingStatuses?.[statusKey];
     
     // Return translated status if found, otherwise return original

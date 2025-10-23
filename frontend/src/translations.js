@@ -89,47 +89,7 @@ export const translations = {
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
-      // Delivery statuses
-      "delivered": "Delivered",
-      "final delivery": "Final delivery",
-      "out for delivery": "Out for delivery",
-      
-      // Pickup statuses
-      "item received at delivery unit": "Item received at delivery unit",
-      "package scanned at pick up point/waiting for pick up": "Package scanned at pick up point/waiting for pick up",
-      "package waiting for pickup by buyer": "Package waiting for pickup by buyer",
-      "available for pickup": "Available for pickup",
-      
-      // Transit statuses
-      "package in regional center": "Package in regional center",
-      "package in sorting center": "Package in sorting center",
-      "sorted to delivery point (after customs)": "Sorted to delivery point (after Customs)",
-      
-      // Customs statuses
-      "parcel cleared": "Parcel cleared",
-      "package released from customs": "Package released from customs",
-      "clearance process started": "Clearance Process Started",
-      
-      // Airport/Flight statuses
-      "package flight details received": "Package flight details received",
-      "landed in israel": "Landed in Israel",
-      "arrive at destination airport": "Arrive at destination airport",
-      "arrived post terminal": "Arrived Post terminal",
-      "arrival at inward office of exchange": "Arrival at inward office of exchange",
-      "the flight has departed": "The flight has departed",
-      "arrive at departure airport": "Arrive at departure airport",
-      
-      // Origin statuses
-      "export clearance success": "Export clearance success",
-      "the package leaves the operation center": "The package leaves the operation center",
-      "the package has arrived at the operation center": "The package has arrived at the operation center",
-      "the package has been sent out": "The package has been sent out",
-      "the electronic information of the package has been received": "The electronic information of the package has been received",
-      
-      // Manifest/System statuses
-      "cargo manifest received": "Cargo manifest received",
-      "parcel manifest received": "Parcel manifest received",
-      "parcel manifest update received": "Parcel manifest update received"
+      // Keep original English - no translation needed
     }
   },
   
@@ -223,7 +183,7 @@ export const translations = {
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
-      // Delivery statuses
+      // Delivery statuses (exact match from API - lowercase)
       "delivered": "נמסר",
       "final delivery": "מסירה סופית",
       "out for delivery": "יצא למשלוח",
@@ -246,6 +206,8 @@ export const translations = {
       
       // Airport/Flight statuses
       "package flight details received": "התקבלו פרטי הטיסה של החבילה",
+      "package landed in tlv airport, il": "החבילה נחתה בשדה התעופה בן גוריון",
+      "departed from airport of origin": "המריא משדה תעופה מקור",
       "landed in israel": "נחתה בישראל",
       "arrive at destination airport": "הגיע לשדה תעופה ביעד",
       "arrived post terminal": "הגיע למסוף דואר",
@@ -259,11 +221,13 @@ export const translations = {
       "the package has arrived at the operation center": "החבילה הגיעה למרכז התפעול",
       "the package has been sent out": "החבילה נשלחה",
       "the electronic information of the package has been received": "המידע האלקטרוני של החבילה התקבל",
+      "package details received": "פרטי החבילה התקבלו",
       
       // Manifest/System statuses
       "cargo manifest received": "התקבל מניפסט מטען",
       "parcel manifest received": "התקבל מניפסט חבילה",
-      "parcel manifest update received": "התקבל עדכון מניפסט חבילה"
+      "parcel manifest update received": "התקבל עדכון מניפסט חבילה",
+      "package detail received": "פרטי החבילה התקבלו"
     }
   }
 };
