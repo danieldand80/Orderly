@@ -89,6 +89,39 @@ export const translations = {
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
+      // Delivery & Arrival statuses
+      "arrived at destination": "Arrived at destination",
+      "arrived": "Arrived",
+      "delivered": "Delivered",
+      "final delivery": "Final delivery",
+      "out for delivery": "Out for delivery",
+      
+      // Transit statuses
+      "departed from hongkong": "Departed from HongKong",
+      "departed": "Departed",
+      "sent to hongkong": "Sent to HongKong",
+      "in transit": "In transit",
+      
+      // Flight statuses
+      "flight delayed": "Flight delayed",
+      "delayed": "Delayed",
+      "waiting for flight": "Waiting for flight",
+      "estimated time for flight": "Estimated time for flight",
+      "flight departed": "Flight departed",
+      "flight landed": "Flight landed",
+      
+      // Scan & Processing statuses
+      "instation scan": "Station scan",
+      "package scanned": "Package scanned",
+      "received": "Received",
+      "info received": "Information received",
+      
+      // Customs statuses
+      "parcel data received at israel customs": "Parcel data received at Israel customs",
+      "customs cleared": "Customs cleared",
+      "in customs": "In customs",
+      "vat paid": "VAT paid",
+      
       // Chinese statuses (from Chinese carriers) - English translation
       "货物离开操作中心": "Package left the operation center",
       "货物到达操作中心": "Package arrived at the operation center",
@@ -112,7 +145,7 @@ export const translations = {
       // Mixed language statuses (Hebrew + English from courier) - Clean English
       "מידע נקלט / shipment data received": "Shipment data received",
       "מידע נקלט (משלוח עדיין לא הגיע) / shipment data received": "Shipment data received",
-      "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "Parcel data received at Israel customs",
+      "נתוני המשלוח שודרו למכס (טרם הגיע לארץ) / parcel data received at israel customs": "Parcel data received at Israel customs",
       "מע\"מ שולם / vat paid": "VAT paid",
       "משלוח עדיין לא הגיע / shipment not yet arrived": "Shipment not yet arrived"
     }
@@ -208,10 +241,38 @@ export const translations = {
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
-      // Delivery statuses (exact match from API - lowercase)
+      // Delivery & Arrival statuses
+      "arrived at destination": "הגיע ליעד",
+      "arrived": "הגיע",
       "delivered": "נמסר",
       "final delivery": "מסירה סופית",
       "out for delivery": "יצא למשלוח",
+      
+      // Transit statuses
+      "departed from hongkong": "יצא מהונג קונג",
+      "departed": "יצא",
+      "sent to hongkong": "נשלח להונג קונג",
+      "in transit": "במעבר",
+      
+      // Flight statuses
+      "flight delayed": "טיסה מתעכבת",
+      "delayed": "מתעכב",
+      "waiting for flight": "ממתין לטיסה",
+      "estimated time for flight": "זמן משוער לטיסה",
+      "flight departed": "הטיסה המריאה",
+      "flight landed": "הטיסה נחתה",
+      
+      // Scan & Processing statuses
+      "instation scan": "סריקה בתחנה",
+      "package scanned": "החבילה נסרקה",
+      "received": "התקבל",
+      "info received": "מידע התקבל",
+      
+      // Customs statuses
+      "parcel data received at israel customs": "נתוני החבילה התקבלו במכס ישראל",
+      "customs cleared": "עבר מכס",
+      "in customs": "במכס",
+      "vat paid": "מע\"מ שולם",
       
       // Pickup statuses
       "item received at delivery unit": "החבילה התקבלה ביחידת המשלוחים",
@@ -277,7 +338,7 @@ export const translations = {
       // Mixed language statuses (Hebrew + English from courier) - Clean Hebrew
       "מידע נקלט / shipment data received": "מידע נקלט",
       "מידע נקלט (משלוח עדיין לא הגיע) / shipment data received": "מידע נקלט (משלוח עדיין לא הגיע)",
-      "נתוני המשלוח שודרו למכס (סרב הגיע לארץ) / parcel data received at israel customs": "נתוני המשלוח שודרו למכס (סרב הגיע לארץ)",
+      "נתוני המשלוח שודרו למכס (טרם הגיע לארץ) / parcel data received at israel customs": "נתוני המשלוח שודרו למכס (טרם הגיע לארץ)",
       "מע\"מ שולם / vat paid": "מע\"מ שולם",
       "משלוח עדיין לא הגיע / shipment not yet arrived": "משלוח עדיין לא הגיע"
     }
