@@ -71,7 +71,6 @@ export async function updateOrderCache(orderId, trackingData) {
       cached_last_location: trackingData.location || null,
       cached_last_updated_at: trackingData.lastUpdated ? new Date(trackingData.lastUpdated).toISOString() : null,
       last_checked_at: new Date().toISOString(),
-      api_check_count: supabase.raw('api_check_count + 1'),
     };
 
     const { data, error } = await supabase
