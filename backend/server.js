@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { getTrackingNumberFromGoogleSheet } from "./utils/googleSheet.js";
+import { getOrderByOrderId, updateOrderCache, saveTrackingHistory } from "./utils/database.js";
 import { fetchTrackingDataFrom17Track, parseTrackingData } from "./utils/track17.js";
 import { selectBestCourierData } from "./utils/selectBestCourier.js";
 
@@ -163,11 +163,11 @@ app.get("/api/track/:orderId", async (req, res) => {
   }
 
   try {
-    // Step 1: Fetch tracking number from Google Sheets
-    console.log("Step 1: Fetching tracking number from Google Sheets...");
-    const trackingNumber = await getTrackingNumberFromGoogleSheet(orderId);
+    // Step 1: Fetch order from database
+    console.log("Step 1: Fetching order from database...");
+    const order = await getOrderByOrderId(orderId);
 
-    if (!trackingNumber) {
+    if (!order) {
       console.log("❌ Order ID not found in system");
       return res.status(404).json({
         status: "not_found",
@@ -176,7 +176,19 @@ app.get("/api/track/:orderId", async (req, res) => {
       });
     }
 
-    console.log(`✅ Found tracking number: ${trackingNumber}`);
+    const trackingNumber = order.logistics_no;
+
+    if (!trackingNumber) {
+      console.log("❌ Order found but tracking number not available yet");
+      return res.status(404).json({
+        status: "tracking_not_generated",
+        message: "Your order was found in our system.\nHowever, the tracking number has not yet been generated.\nThis is completely normal - it usually takes around 10–14 days for the tracking number to appear after the package is first registered with the courier.\n\nPlease check back in a few days to see your updated tracking information.",
+        orderId: orderId,
+      });
+    }
+
+    console.log(`✅ Found order: ${orderId}`);
+    console.log(`✅ Tracking number: ${trackingNumber}`);
 
     // Step 2: Query 17Track API
     console.log("Step 2: Querying 17Track API...");
@@ -227,7 +239,16 @@ app.get("/api/track/:orderId", async (req, res) => {
     console.log(`✅ Selected courier: ${bestCourier.courier}`);
     console.log(`✅ Latest status: ${bestCourier.latestStatus}`);
 
-    // Step 5: Return formatted response
+    // Step 5: Update cache and save history (async, non-blocking)
+    updateOrderCache(orderId, bestCourier).catch(err => 
+      console.error("Cache update failed (non-critical):", err.message)
+    );
+    
+    saveTrackingHistory(orderId, bestCourier.history).catch(err =>
+      console.error("History save failed (non-critical):", err.message)
+    );
+
+    // Step 6: Return formatted response
     const response = {
       status: "success",
       orderId: orderId,
