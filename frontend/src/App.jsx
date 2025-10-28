@@ -2,11 +2,13 @@ import { useState } from 'react'
 import { useLanguage } from './LanguageContext'
 import TrackingForm from './components/TrackingForm'
 import TrackingResult from './components/TrackingResult'
+import ProductLookup from './components/ProductLookup'
 import Header from './components/Header'
 import Footer from './components/Footer'
 
 function App() {
   const { t } = useLanguage()
+  const [activeTab, setActiveTab] = useState('tracking') // 'tracking' or 'product'
   const [trackingData, setTrackingData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -62,15 +64,60 @@ function App() {
       
       <main className="flex-grow container mx-auto px-4 py-8 sm:py-12">
         <div className="max-w-4xl mx-auto">
-          {/* Hero Section */}
-          <div className="text-center mb-8 sm:mb-12">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
-              {t.hero.title}
-            </h1>
-            <p className="text-lg text-gray-600">
-              {t.hero.subtitle}
-            </p>
+          {/* Navigation Tabs */}
+          <div className="flex justify-center mb-8">
+            <div className="inline-flex rounded-lg border border-gray-200 bg-white p-1">
+              <button
+                onClick={() => {
+                  setActiveTab('tracking')
+                  handleReset()
+                }}
+                className={`px-6 py-2.5 rounded-lg font-medium transition-all ${
+                  activeTab === 'tracking'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{t.nav.trackShipment}</span>
+                </div>
+              </button>
+              <button
+                onClick={() => {
+                  setActiveTab('product')
+                  handleReset()
+                }}
+                className={`px-6 py-2.5 rounded-lg font-medium transition-all ${
+                  activeTab === 'product'
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
+                }`}
+              >
+                <div className="flex items-center space-x-2 rtl:space-x-reverse">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span>{t.nav.productLookup}</span>
+                </div>
+              </button>
+            </div>
           </div>
+
+          {/* Track Shipment Tab */}
+          {activeTab === 'tracking' && (
+            <>
+              {/* Hero Section */}
+              <div className="text-center mb-8 sm:mb-12">
+                <h1 className="text-4xl sm:text-5xl font-bold text-gray-800 mb-4">
+                  {t.hero.title}
+                </h1>
+                <p className="text-lg text-gray-600">
+                  {t.hero.subtitle}
+                </p>
+              </div>
 
           {/* Tracking Form */}
           <div className="mb-8">
@@ -162,6 +209,13 @@ function App() {
                 <p className="text-gray-600 text-sm">{t.info.available247.description}</p>
               </div>
             </div>
+          )}
+            </>
+          )}
+
+          {/* Product Lookup Tab */}
+          {activeTab === 'product' && (
+            <ProductLookup />
           )}
         </div>
       </main>

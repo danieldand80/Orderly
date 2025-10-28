@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { getOrderByOrderId, updateOrderCache, saveTrackingHistory } from "./utils/database.js";
 import { fetchTrackingDataFrom17Track, parseTrackingData } from "./utils/track17.js";
 import { selectBestCourierData } from "./utils/selectBestCourier.js";
+import { getProductInfoFromGoogleSheet } from "./utils/productLookup.js";
 
 // Load environment variables
 dotenv.config();
@@ -273,6 +274,54 @@ app.get("/api/track/:orderId", async (req, res) => {
   }
 });
 
+/**
+ * Product Lookup endpoint
+ * GET /api/product/:orderId
+ */
+app.get("/api/product/:orderId", async (req, res) => {
+  const { orderId } = req.params;
+
+  if (!orderId || orderId.trim() === "") {
+    return res.status(400).json({
+      status: "error",
+      message: "Order ID is required",
+    });
+  }
+
+  console.log(`\n🔍 Product Lookup request for Order ID: ${orderId}`);
+
+  try {
+    const productInfo = await getProductInfoFromGoogleSheet(orderId);
+
+    if (!productInfo) {
+      console.log("❌ Product not found for this order");
+      return res.status(404).json({
+        status: "not_found",
+        message: "We couldn't find product information for this order ID.\n\nPlease make sure:\n• The order number is correct (starts with FLY)\n• The order exists in our system\n\nIf you continue to experience issues, please contact support.",
+        orderId: orderId,
+      });
+    }
+
+    console.log(`✅ Product found: ${productInfo.productName}`);
+
+    return res.json({
+      status: "success",
+      orderId: orderId,
+      productName: productInfo.productName,
+      productCode: productInfo.productCode,
+      imageUrl: productInfo.imageUrl,
+    });
+
+  } catch (error) {
+    console.error("❌ Error processing product lookup request:", error.message);
+    return res.status(500).json({
+      status: "error",
+      message: "An error occurred while processing your request. Please try again later.",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
@@ -295,6 +344,7 @@ app.listen(PORT, () => {
   console.log(`\n🚀 Shipment Tracking API Server`);
   console.log(`📍 Running on http://localhost:${PORT}`);
   console.log(`🔍 Track endpoint: GET /api/track/:orderId`);
+  console.log(`🔍 Product Lookup endpoint: GET /api/product/:orderId`);
   
   if (DEMO_MODE) {
     console.log(`\n🎭 ========== DEMO MODE ENABLED ==========`);

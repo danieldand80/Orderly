@@ -86,6 +86,44 @@ export const translations = {
       copyright: "© 2025 Orderly. All rights reserved.",
       poweredBy: "Powered by 17Track API & Supabase"
     },
+
+    // Navigation Tabs
+    nav: {
+      trackShipment: "Track Shipment",
+      productLookup: "Product Lookup"
+    },
+
+    // Product Lookup
+    productLookup: {
+      title: "Find Your Product",
+      subtitle: "Enter your order number to see the actual product you purchased",
+      form: {
+        label: "Order Number",
+        placeholder: "Enter your order number",
+        hint: "Enter your order ID that starts with \"FLY\"",
+        button: "Find Product",
+        buttonLoading: "Searching..."
+      },
+      loading: {
+        title: "Looking up your product...",
+        subtitle: "This will only take a moment"
+      },
+      error: {
+        title: "Product Not Found",
+        notFound: "We couldn't find product information for this order ID.\n\nPlease make sure:\n• The order number is correct (starts with FLY)\n• The order exists in our system\n\nIf you continue to experience issues, please contact support.",
+        generalError: "An error occurred while processing your request. Please try again later.",
+        tryAnother: "Try another order"
+      },
+      result: {
+        title: "Your Product",
+        orderId: "Order ID",
+        productName: "Product Name",
+        productCode: "Product Code",
+        imageAlt: "Product Image",
+        noImage: "Image not available",
+        searchAnother: "Search Another Product"
+      }
+    },
     
     // Tracking Status Translations (from courier API)
     trackingStatuses: {
@@ -232,6 +270,44 @@ export const translations = {
     footer: {
       copyright: "© 2025 Orderly. כל הזכויות שמורות.",
       poweredBy: "מופעל על ידי 17Track API ו-Supabase"
+    },
+
+    // Navigation Tabs
+    nav: {
+      trackShipment: "מעקב משלוח",
+      productLookup: "חיפוש מוצר"
+    },
+
+    // Product Lookup
+    productLookup: {
+      title: "מצא את המוצר שלך",
+      subtitle: "הזן את מספר ההזמנה כדי לראות את המוצר האמיתי שרכשת",
+      form: {
+        label: "מספר הזמנה",
+        placeholder: "הזן את מספר ההזמנה שלך",
+        hint: "הזן את מזהה ההזמנה שמתחיל ב-\"FLY\"",
+        button: "מצא מוצר",
+        buttonLoading: "מחפש..."
+      },
+      loading: {
+        title: "מחפש את המוצר שלך...",
+        subtitle: "זה ייקח רק רגע"
+      },
+      error: {
+        title: "המוצר לא נמצא",
+        notFound: "לא הצלחנו למצוא מידע על מוצר עבור מזהה הזמנה זה.\n\nאנא ודא:\n• מספר ההזמנה נכון (מתחיל ב-FLY)\n• ההזמנה קיימת במערכת שלנו\n\nאם אתה ממשיך לחוות בעיות, אנא צור קשר עם התמיכה.",
+        generalError: "אירעה שגיאה בעיבוד הבקשה שלך. אנא נסה שוב מאוחר יותר.",
+        tryAnother: "נסה הזמנה אחרת"
+      },
+      result: {
+        title: "המוצר שלך",
+        orderId: "מספר הזמנה",
+        productName: "שם המוצר",
+        productCode: "קוד מוצר",
+        imageAlt: "תמונת מוצר",
+        noImage: "תמונה לא זמינה",
+        searchAnother: "חפש מוצר אחר"
+      }
     },
     
     // Tracking Status Translations (from courier API)
