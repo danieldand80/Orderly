@@ -2,7 +2,7 @@ export const translations = {
   en: {
     // Header
     header: {
-      title: "Flylink",
+      title: "Orderly",
       subtitle: "Shipment Tracking System"
     },
     
@@ -83,8 +83,8 @@ export const translations = {
     
     // Footer
     footer: {
-      copyright: "© 2025 Flylink. All rights reserved.",
-      poweredBy: "Powered by 17Track API & Google Sheets"
+      copyright: "© 2025 Orderly. All rights reserved.",
+      poweredBy: "Powered by 17Track API & Supabase"
     },
     
     // Tracking Status Translations (from courier API)
@@ -149,7 +149,7 @@ export const translations = {
   he: {
     // Header
     header: {
-      title: "Flylink",
+      title: "Orderly",
       subtitle: "מערכת מעקב משלוחים"
     },
     
@@ -230,8 +230,8 @@ export const translations = {
     
     // Footer
     footer: {
-      copyright: "© 2025 Flylink. כל הזכויות שמורות.",
-      poweredBy: "מופעל על ידי 17Track API ו-Google Sheets"
+      copyright: "© 2025 Orderly. כל הזכויות שמורות.",
+      poweredBy: "מופעל על ידי 17Track API ו-Supabase"
     },
     
     // Tracking Status Translations (from courier API)
