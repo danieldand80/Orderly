@@ -33,11 +33,14 @@ export async function getProductInfoFromGoogleSheet(orderId) {
     const auth = new google.auth.GoogleAuth(authConfig);
     const sheets = google.sheets({ version: "v4", auth });
     
+    // Use separate spreadsheet for Product Lookup
+    const productSheetId = process.env.GOOGLE_SHEET_ID_PRODUCTS || process.env.GOOGLE_SHEET_ID;
+    
     // STEP 1: Find Product Code from Order ID
     console.log(`🔍 Step 1: Looking up Order ID "${orderId}" in Flylink Data sheet...`);
     
     const flylinkDataResponse = await sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      spreadsheetId: productSheetId,
       range: "'Flylink Data'!A:C", // Order ID | Product Code | logisticsNo (Note: single quotes around sheet name with spaces)
     });
 
@@ -70,7 +73,7 @@ export async function getProductInfoFromGoogleSheet(orderId) {
     console.log(`🔍 Step 2: Looking up Product Code "${productCode}" in Product Codes sheet...`);
     
     const productCodesResponse = await sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      spreadsheetId: productSheetId,
       range: "'Product Codes'!A:C", // Product | FlyCode | Image (Note: single quotes around sheet name with spaces)
     });
 
