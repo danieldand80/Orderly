@@ -31,7 +31,7 @@ export async function getTrackingNumberFromGoogleSheet(orderId) {
     const sheets = google.sheets({ version: "v4", auth });
     const res = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Flylink Data Global!A:C", // Updated range to include column C
+      range: "'Flylink Data Global'!A:C", // Updated range to include column C (Note: single quotes around sheet name with spaces)
     });
 
     const rows = res.data.values;

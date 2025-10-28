@@ -38,7 +38,7 @@ export async function getProductInfoFromGoogleSheet(orderId) {
     
     const flylinkDataResponse = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Flylink Data!A:C", // Order ID | Product Code | logisticsNo
+      range: "'Flylink Data'!A:C", // Order ID | Product Code | logisticsNo (Note: single quotes around sheet name with spaces)
     });
 
     const flylinkRows = flylinkDataResponse.data.values;
@@ -71,7 +71,7 @@ export async function getProductInfoFromGoogleSheet(orderId) {
     
     const productCodesResponse = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID,
-      range: "Product Codes!A:C", // Product | FlyCode | Image
+      range: "'Product Codes'!A:C", // Product | FlyCode | Image (Note: single quotes around sheet name with spaces)
     });
 
     const productRows = productCodesResponse.data.values;
