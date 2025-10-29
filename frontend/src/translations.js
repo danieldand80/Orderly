@@ -52,7 +52,9 @@ export const translations = {
       showHistory: "Show Tracking History",
       hideHistory: "Hide Tracking History",
       trackAnother: "Track Another Order",
-      historyTitle: "Tracking History"
+      historyTitle: "Tracking History",
+      copyDetails: "Copy details",
+      copied: "Copied!"
     },
     
     // Progress Stages
@@ -237,7 +239,9 @@ export const translations = {
       showHistory: "הצג היסטוריית מעקב",
       hideHistory: "הסתר היסטוריית מעקב",
       trackAnother: "עקוב אחר הזמנה אחרת",
-      historyTitle: "היסטוריית מעקב"
+      historyTitle: "היסטוריית מעקב",
+      copyDetails: "העתק פרטים",
+      copied: "הועתק!"
     },
     
     // Progress Stages

@@ -4,6 +4,7 @@ import { useLanguage } from '../LanguageContext'
 function TrackingResult({ data, onReset }) {
   const { t, language, translateStatus } = useLanguage()
   const [showHistory, setShowHistory] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A'
@@ -20,6 +21,66 @@ function TrackingResult({ data, onReset }) {
       })
     } catch {
       return dateString
+    }
+  }
+
+  // Format date for 17track style: YYYY-MM-DD HH:MM
+  const formatDateFor17Track = (dateString) => {
+    if (!dateString) return ''
+    
+    try {
+      const date = new Date(dateString)
+      const year = date.getFullYear()
+      const month = String(date.getMonth() + 1).padStart(2, '0')
+      const day = String(date.getDate()).padStart(2, '0')
+      const hours = String(date.getHours()).padStart(2, '0')
+      const minutes = String(date.getMinutes()).padStart(2, '0')
+      
+      return `${year}-${month}-${day} ${hours}:${minutes}`
+    } catch {
+      return dateString
+    }
+  }
+
+  // Copy tracking details in 17track format
+  const copyTrackingDetails = async () => {
+    // Calculate days in transit
+    let daysText = ''
+    if (data.history && data.history.length > 0) {
+      const firstEvent = new Date(data.history[data.history.length - 1].date)
+      const lastEvent = new Date(data.history[0].date)
+      const days = Math.ceil((lastEvent - firstEvent) / (1000 * 60 * 60 * 24))
+      if (days > 0) {
+        daysText = ` (${days} Days)`
+      }
+    }
+
+    // Format status
+    const status = translateStatus(data.latestStatus)
+
+    // Build the text in 17track format
+    let text = `Number: ${data.trackingNumber}\n`
+    text += `Package status: ${status}${daysText}\n`
+    text += `Country: China -> Israel\n`
+    text += `${data.courier}:\n`
+
+    // Add tracking history
+    if (data.history && data.history.length > 0) {
+      data.history.forEach((event) => {
+        const formattedDate = formatDateFor17Track(event.date)
+        const formattedStatus = translateStatus(event.status)
+        const location = event.location ? `${event.location}, ` : 'IL, '
+        text += `${formattedDate} ${location}${formattedStatus}\n`
+      })
+    }
+
+    // Copy to clipboard
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      console.error('Failed to copy:', err)
     }
   }
 
@@ -211,6 +272,26 @@ function TrackingResult({ data, onReset }) {
 
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <button
+            onClick={copyTrackingDetails}
+            className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+          >
+            {copied ? (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                </svg>
+                {t.results.copied}
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+                {t.results.copyDetails}
+              </>
+            )}
+          </button>
           <button
             onClick={() => setShowHistory(!showHistory)}
             className="px-6 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium rounded-lg transition-colors"
