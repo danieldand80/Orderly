@@ -8,11 +8,11 @@ function Header() {
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-2 rounded-lg shadow-sm">
+            <div className="bg-gradient-to-br from-blue-50 to-purple-50 p-3 rounded-xl shadow-md">
               <img 
                 src="/orderlylogo.png" 
                 alt="Orderly Logo" 
-                className="h-10 w-auto object-contain"
+                className="h-16 w-auto object-contain"
               />
             </div>
             <div>
