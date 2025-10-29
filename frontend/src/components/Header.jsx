@@ -7,14 +7,14 @@ function Header() {
     <header className="bg-white shadow-sm border-b border-gray-200">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
+          <div className="flex items-center space-x-4 rtl:space-x-reverse">
             <img 
               src="/orderlylogo.png" 
               alt="Orderly Logo" 
-              className="h-20 w-auto object-contain"
+              className="h-40 w-auto object-contain"
             />
             <div>
-              <p className="text-sm text-gray-600">{t.header.subtitle}</p>
+              <p className="text-base text-gray-600">{t.header.subtitle}</p>
             </div>
           </div>
 
