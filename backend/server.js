@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import cron from "node-cron";
 import { getOrderByOrderId, updateOrderCache, saveTrackingHistory } from "./utils/database.js";
 import { fetchTrackingDataFrom17Track, parseTrackingData } from "./utils/track17.js";
 import { selectBestCourierData } from "./utils/selectBestCourier.js";
@@ -406,6 +407,26 @@ app.use((err, req, res, next) => {
   });
 });
 
+// ============================================
+// AUTOMATIC DAILY SYNC (Built-in Cron Job)
+// ============================================
+
+// Schedule sync to run every day at 3:00 AM UTC (6:00 AM Israel Time)
+cron.schedule('0 3 * * *', async () => {
+  console.log('\n⏰ ===== SCHEDULED SYNC TRIGGERED =====');
+  console.log(`📅 Time: ${new Date().toISOString()}`);
+  
+  try {
+    await syncOrdersFromGoogleSheets();
+    console.log('✅ Scheduled sync completed successfully\n');
+  } catch (error) {
+    console.error('❌ Scheduled sync failed:', error.message);
+    console.error('Will retry tomorrow at 3:00 AM UTC\n');
+  }
+}, {
+  timezone: "UTC"
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`\n🚀 Shipment Tracking API Server`);
@@ -413,6 +434,7 @@ app.listen(PORT, () => {
   console.log(`🔍 Track endpoint: GET /api/track/:orderId`);
   console.log(`🔍 Product Lookup endpoint: GET /api/product/:orderId`);
   console.log(`🔄 Sync endpoint: POST /api/sync-orders (Protected)`);
+  console.log(`⏰ Auto-sync: Every day at 3:00 AM UTC (Built-in)`);
   
   if (DEMO_MODE) {
     console.log(`\n🎭 ========== DEMO MODE ENABLED ==========`);
