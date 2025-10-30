@@ -128,7 +128,7 @@ async function upsertOrdersToSupabase(orders) {
       // Prepare data for upsert
       const upsertData = batch.map(order => ({
         order_id: order.order_id,
-        tracking_number: order.tracking_number || null,
+        logistics_no: order.tracking_number || null, // Changed from tracking_number to logistics_no
         product_code: order.product_code || null,
         datetime_of_purchase: order.datetime_of_purchase || null,
         updated_at: new Date().toISOString(),
