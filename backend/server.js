@@ -5,6 +5,7 @@ import { getOrderByOrderId, updateOrderCache, saveTrackingHistory } from "./util
 import { fetchTrackingDataFrom17Track, parseTrackingData } from "./utils/track17.js";
 import { selectBestCourierData } from "./utils/selectBestCourier.js";
 import { getProductInfoFromGoogleSheet } from "./utils/productLookup.js";
+import { syncOrdersFromGoogleSheets } from "./utils/syncOrders.js";
 
 // Load environment variables
 dotenv.config();
@@ -322,6 +323,72 @@ app.get("/api/product/:orderId", async (req, res) => {
   }
 });
 
+/**
+ * Order Synchronization endpoint
+ * POST /api/sync-orders
+ * 
+ * Protected by API key (SYNC_API_KEY)
+ * Syncs orders from Google Sheets to Supabase
+ * - Updates existing orders
+ * - Adds new orders
+ * - Deletes orders older than 4 months
+ */
+app.post("/api/sync-orders", async (req, res) => {
+  console.log("\n🔄 Sync request received");
+
+  // Check API key authentication
+  const apiKey = req.headers["x-api-key"] || req.query.api_key;
+  const validApiKey = process.env.SYNC_API_KEY;
+
+  if (!validApiKey) {
+    console.error("❌ SYNC_API_KEY not configured in environment");
+    return res.status(500).json({
+      status: "error",
+      message: "Sync API key not configured on server",
+    });
+  }
+
+  if (!apiKey || apiKey !== validApiKey) {
+    console.error("❌ Unauthorized sync attempt");
+    return res.status(401).json({
+      status: "error",
+      message: "Unauthorized - Invalid API key",
+    });
+  }
+
+  console.log("✅ API key validated");
+
+  try {
+    // Run synchronization
+    const result = await syncOrdersFromGoogleSheets();
+
+    if (result.success) {
+      return res.json({
+        status: "success",
+        message: result.message,
+        stats: result.stats,
+        timestamp: new Date().toISOString(),
+      });
+    } else {
+      return res.status(500).json({
+        status: "error",
+        message: result.message,
+        error: result.error,
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+  } catch (error) {
+    console.error("❌ Sync endpoint error:", error.message);
+    return res.status(500).json({
+      status: "error",
+      message: "Synchronization failed",
+      error: error.message,
+      timestamp: new Date().toISOString(),
+    });
+  }
+});
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({
@@ -345,6 +412,7 @@ app.listen(PORT, () => {
   console.log(`📍 Running on http://localhost:${PORT}`);
   console.log(`🔍 Track endpoint: GET /api/track/:orderId`);
   console.log(`🔍 Product Lookup endpoint: GET /api/product/:orderId`);
+  console.log(`🔄 Sync endpoint: POST /api/sync-orders (Protected)`);
   
   if (DEMO_MODE) {
     console.log(`\n🎭 ========== DEMO MODE ENABLED ==========`);
