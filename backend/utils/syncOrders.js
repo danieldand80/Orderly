@@ -50,7 +50,7 @@ async function fetchOrdersFromGoogleSheets() {
     const auth = new google.auth.GoogleAuth(authConfig);
     const sheets = google.sheets({ version: "v4", auth });
 
-    // Fetch from "Flylink Data Global" sheet (for tracking)
+    // Fetch from "Flylink Global Data" sheet (for tracking)
     const trackingSheetId = process.env.GOOGLE_SHEET_ID;
     if (!trackingSheetId) {
       throw new Error("GOOGLE_SHEET_ID not configured");
@@ -60,7 +60,7 @@ async function fetchOrdersFromGoogleSheets() {
 
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: trackingSheetId,
-      range: "'Flylink Data Global'!A:D", // Order ID | Datetime | Product Code | logisticsNo
+      range: "'Flylink Global Data'!A:D", // Order ID | Datetime | Product Code | logisticsNo
     });
 
     const rows = response.data.values;
