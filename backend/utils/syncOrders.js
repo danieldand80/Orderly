@@ -118,6 +118,7 @@ async function upsertOrdersToSupabase(orders) {
 
     let inserted = 0;
     let updated = 0;
+    let unchanged = 0;
     let errors = 0;
 
     // Process in batches of 100
@@ -126,11 +127,11 @@ async function upsertOrdersToSupabase(orders) {
       const batch = orders.slice(i, i + batchSize);
       
       try {
-        // First, check which orders already exist
+        // First, get existing orders with their data
         const orderIds = batch.map(o => o.order_id);
         const { data: existingOrders, error: checkError } = await supabase
           .from("orders")
-          .select("order_id")
+          .select("order_id, logistics_no, product_code, datetime_of_purchase")
           .in("order_id", orderIds);
 
         if (checkError) {
@@ -139,18 +140,43 @@ async function upsertOrdersToSupabase(orders) {
           continue;
         }
 
-        const existingOrderIds = new Set(existingOrders.map(o => o.order_id));
-        const batchInsertCount = batch.filter(o => !existingOrderIds.has(o.order_id)).length;
-        const batchUpdateCount = batch.filter(o => existingOrderIds.has(o.order_id)).length;
+        // Create map of existing orders for quick lookup
+        const existingOrdersMap = new Map(
+          existingOrders.map(o => [o.order_id, o])
+        );
 
-        // Prepare data for upsert
-        const upsertData = batch.map(order => ({
-          order_id: order.order_id,
-          logistics_no: order.tracking_number || null,
-          product_code: order.product_code || null,
-          datetime_of_purchase: order.datetime_of_purchase || null,
-          updated_at: new Date().toISOString(),
-        }));
+        let batchInsertCount = 0;
+        let batchUpdateCount = 0;
+        let batchUnchangedCount = 0;
+
+        // Prepare data for upsert and count changes
+        const upsertData = batch.map(order => {
+          const existing = existingOrdersMap.get(order.order_id);
+          
+          if (!existing) {
+            // New order
+            batchInsertCount++;
+          } else {
+            // Check if data actually changed
+            const trackingChanged = (order.tracking_number || null) !== (existing.logistics_no || null);
+            const productChanged = (order.product_code || null) !== (existing.product_code || null);
+            const dateChanged = (order.datetime_of_purchase || null) !== (existing.datetime_of_purchase || null);
+            
+            if (trackingChanged || productChanged || dateChanged) {
+              batchUpdateCount++;
+            } else {
+              batchUnchangedCount++;
+            }
+          }
+
+          return {
+            order_id: order.order_id,
+            logistics_no: order.tracking_number || null,
+            product_code: order.product_code || null,
+            datetime_of_purchase: order.datetime_of_purchase || null,
+            updated_at: new Date().toISOString(),
+          };
+        });
 
         // Upsert using order_id as conflict target
         const { data, error } = await supabase
@@ -167,11 +193,12 @@ async function upsertOrdersToSupabase(orders) {
           continue;
         }
 
-        // Count inserts vs updates
+        // Count inserts vs updates vs unchanged
         inserted += batchInsertCount;
         updated += batchUpdateCount;
+        unchanged += batchUnchangedCount;
 
-        console.log(`✅ Batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(orders.length / batchSize)}: +${batchInsertCount} new, ~${batchUpdateCount} updated`);
+        console.log(`✅ Batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(orders.length / batchSize)}: +${batchInsertCount} new, ~${batchUpdateCount} updated, ${batchUnchangedCount} unchanged`);
 
       } catch (batchError) {
         console.error(`❌ Error processing batch:`, batchError.message);
@@ -179,12 +206,13 @@ async function upsertOrdersToSupabase(orders) {
       }
     }
 
-    console.log(`✅ Upsert complete: ${inserted} inserted, ${updated} updated, ${errors} errors`);
+    console.log(`✅ Upsert complete: ${inserted} inserted, ${updated} updated, ${unchanged} unchanged, ${errors} errors`);
     
     return {
       total: orders.length,
       inserted: inserted,
       updated: updated,
+      unchanged: unchanged,
       errors: errors,
     };
 
@@ -265,6 +293,7 @@ export async function syncOrdersFromGoogleSheets() {
           fetched: 0,
           inserted: 0,
           updated: 0,
+          unchanged: 0,
           errors: 0,
           deleted: 0,
         },
@@ -282,7 +311,8 @@ export async function syncOrdersFromGoogleSheets() {
     console.log("\n✅ ===== SYNCHRONIZATION COMPLETE =====");
     console.log(`📊 Fetched: ${orders.length} orders`);
     console.log(`📊 Inserted (new): ${upsertStats.inserted} orders`);
-    console.log(`📊 Updated (existing): ${upsertStats.updated} orders`);
+    console.log(`📊 Updated (changed): ${upsertStats.updated} orders`);
+    console.log(`📊 Unchanged (synced): ${upsertStats.unchanged} orders`);
     console.log(`📊 Errors: ${upsertStats.errors} orders`);
     console.log(`📊 Deleted (old): ${deletedCount} orders`);
     console.log(`⏱️ Duration: ${duration}s`);
@@ -294,6 +324,7 @@ export async function syncOrdersFromGoogleSheets() {
         fetched: orders.length,
         inserted: upsertStats.inserted,
         updated: upsertStats.updated,
+        unchanged: upsertStats.unchanged,
         errors: upsertStats.errors,
         deleted: deletedCount,
         duration: `${duration}s`,
