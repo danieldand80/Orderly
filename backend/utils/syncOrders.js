@@ -125,16 +125,33 @@ async function upsertOrdersToSupabase(orders) {
     for (let i = 0; i < orders.length; i += batchSize) {
       const batch = orders.slice(i, i + batchSize);
       
-      // Prepare data for upsert
-      const upsertData = batch.map(order => ({
-        order_id: order.order_id,
-        logistics_no: order.tracking_number || null, // Changed from tracking_number to logistics_no
-        product_code: order.product_code || null,
-        datetime_of_purchase: order.datetime_of_purchase || null,
-        updated_at: new Date().toISOString(),
-      }));
-
       try {
+        // First, check which orders already exist
+        const orderIds = batch.map(o => o.order_id);
+        const { data: existingOrders, error: checkError } = await supabase
+          .from("orders")
+          .select("order_id")
+          .in("order_id", orderIds);
+
+        if (checkError) {
+          console.error(`❌ Error checking existing orders:`, checkError.message);
+          errors += batch.length;
+          continue;
+        }
+
+        const existingOrderIds = new Set(existingOrders.map(o => o.order_id));
+        const batchInsertCount = batch.filter(o => !existingOrderIds.has(o.order_id)).length;
+        const batchUpdateCount = batch.filter(o => existingOrderIds.has(o.order_id)).length;
+
+        // Prepare data for upsert
+        const upsertData = batch.map(order => ({
+          order_id: order.order_id,
+          logistics_no: order.tracking_number || null,
+          product_code: order.product_code || null,
+          datetime_of_purchase: order.datetime_of_purchase || null,
+          updated_at: new Date().toISOString(),
+        }));
+
         // Upsert using order_id as conflict target
         const { data, error } = await supabase
           .from("orders")
@@ -150,13 +167,11 @@ async function upsertOrdersToSupabase(orders) {
           continue;
         }
 
-        // Count inserts vs updates (rough estimate)
-        // In real scenario, we'd need to check if order existed before
-        if (data) {
-          inserted += data.length;
-        }
+        // Count inserts vs updates
+        inserted += batchInsertCount;
+        updated += batchUpdateCount;
 
-        console.log(`✅ Processed batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(orders.length / batchSize)}`);
+        console.log(`✅ Batch ${Math.floor(i / batchSize) + 1}/${Math.ceil(orders.length / batchSize)}: +${batchInsertCount} new, ~${batchUpdateCount} updated`);
 
       } catch (batchError) {
         console.error(`❌ Error processing batch:`, batchError.message);
@@ -164,11 +179,12 @@ async function upsertOrdersToSupabase(orders) {
       }
     }
 
-    console.log(`✅ Upsert complete: ${inserted} processed, ${errors} errors`);
+    console.log(`✅ Upsert complete: ${inserted} inserted, ${updated} updated, ${errors} errors`);
     
     return {
       total: orders.length,
-      processed: inserted,
+      inserted: inserted,
+      updated: updated,
       errors: errors,
     };
 
@@ -247,7 +263,8 @@ export async function syncOrdersFromGoogleSheets() {
         message: "No orders found in Google Sheets",
         stats: {
           fetched: 0,
-          processed: 0,
+          inserted: 0,
+          updated: 0,
           errors: 0,
           deleted: 0,
         },
@@ -264,7 +281,8 @@ export async function syncOrdersFromGoogleSheets() {
     
     console.log("\n✅ ===== SYNCHRONIZATION COMPLETE =====");
     console.log(`📊 Fetched: ${orders.length} orders`);
-    console.log(`📊 Processed: ${upsertStats.processed} orders`);
+    console.log(`📊 Inserted (new): ${upsertStats.inserted} orders`);
+    console.log(`📊 Updated (existing): ${upsertStats.updated} orders`);
     console.log(`📊 Errors: ${upsertStats.errors} orders`);
     console.log(`📊 Deleted (old): ${deletedCount} orders`);
     console.log(`⏱️ Duration: ${duration}s`);
@@ -274,7 +292,8 @@ export async function syncOrdersFromGoogleSheets() {
       message: "Synchronization completed successfully",
       stats: {
         fetched: orders.length,
-        processed: upsertStats.processed,
+        inserted: upsertStats.inserted,
+        updated: upsertStats.updated,
         errors: upsertStats.errors,
         deleted: deletedCount,
         duration: `${duration}s`,
