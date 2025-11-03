@@ -326,15 +326,19 @@ app.get("/api/product/:orderId", async (req, res) => {
 
 /**
  * Order Synchronization endpoint
- * POST /api/sync-orders
+ * GET or POST /api/sync-orders
  * 
  * Protected by API key (SYNC_API_KEY)
  * Syncs orders from Google Sheets to Supabase
  * - Updates existing orders
  * - Adds new orders
  * - Deletes orders older than 4 months
+ * 
+ * Usage:
+ * - GET: Open in browser with ?api_key=YOUR_KEY
+ * - POST: Send with x-api-key header or api_key query param
  */
-app.post("/api/sync-orders", async (req, res) => {
+const handleSync = async (req, res) => {
   console.log("\n🔄 Sync request received");
 
   // Check API key authentication
@@ -388,7 +392,11 @@ app.post("/api/sync-orders", async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   }
-});
+};
+
+// Support both GET and POST methods
+app.get("/api/sync-orders", handleSync);
+app.post("/api/sync-orders", handleSync);
 
 // 404 handler
 app.use((req, res) => {
@@ -433,7 +441,7 @@ app.listen(PORT, () => {
   console.log(`📍 Running on http://localhost:${PORT}`);
   console.log(`🔍 Track endpoint: GET /api/track/:orderId`);
   console.log(`🔍 Product Lookup endpoint: GET /api/product/:orderId`);
-  console.log(`🔄 Sync endpoint: POST /api/sync-orders (Protected)`);
+  console.log(`🔄 Sync endpoint: GET/POST /api/sync-orders (Protected)`);
   console.log(`⏰ Auto-sync: Every day at 3:00 AM UTC (Built-in)`);
   
   if (DEMO_MODE) {
