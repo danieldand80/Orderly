@@ -4,7 +4,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://flylink-production.up.railway.app/api/:path*"
+      "destination": "https://orderly-production-0979.up.railway.app/api/:path*"
     }
   ]
 }
