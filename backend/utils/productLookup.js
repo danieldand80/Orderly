@@ -37,11 +37,11 @@ export async function getProductInfoFromGoogleSheet(orderId) {
     const productSheetId = process.env.GOOGLE_SHEET_ID_PRODUCTS || process.env.GOOGLE_SHEET_ID;
     
     // STEP 1: Find Product Code from Order ID
-    console.log(`🔍 Step 1: Looking up Order ID "${orderId}" in Flylink Data sheet...`);
+    console.log(`🔍 Step 1: Looking up Order ID "${orderId}" in Flylink Global Data sheet...`);
     
     const flylinkDataResponse = await sheets.spreadsheets.values.get({
       spreadsheetId: productSheetId,
-      range: "'Flylink Data'!A:C", // Order ID | Product Code | logisticsNo (Note: single quotes around sheet name with spaces)
+      range: "'Flylink Global Data'!A:D", // Order ID | Datetime | Product Code | logisticsNo (Note: single quotes around sheet name with spaces)
     });
 
     const flylinkRows = flylinkDataResponse.data.values;
@@ -56,14 +56,14 @@ export async function getProductInfoFromGoogleSheet(orderId) {
     );
     
     if (!orderMatch) {
-      console.log(`❌ Order ID "${orderId}" not found in Flylink Data sheet`);
+      console.log(`❌ Order ID "${orderId}" not found in Flylink Global Data sheet`);
       return null;
     }
 
-    const productCode = orderMatch[1]; // Column B - Product Code
+    const productCode = orderMatch[2]; // Column C - Product Code
     
     if (!productCode || !productCode.toString().trim()) {
-      console.log(`❌ Order ID "${orderId}" found but Product Code (column B) is empty`);
+      console.log(`❌ Order ID "${orderId}" found but Product Code (column C) is empty`);
       return null;
     }
 
